@@ -124,7 +124,7 @@ Ndef(\lp3, {
 	// sig = PitchShift.ar(sig, 0.2, 0.5, 0.01, 0.01, 2);
 	// sig = sig * SinOsc.kr(3);
 	sig = LPF.ar(sig, 1500);
-	sig * 1
+	sig * 0.2
 })
 )
 Ndef(\lp3).release
@@ -132,11 +132,11 @@ Ndef(\lp3).release
 (
 Ndef(\sample1, {
 	var sig, sigIn, env, playhead, start, end, local, feedVal = 0.5;
-	start = 3 + [0, 0.01] * 44100 ;
-	end = 3 * 44100 + start;
+	start = 23 + [0, 0.01] * 44100 ;
+	end = 0.1 * 44100 + start;
 	playhead = Phasor.ar(1, 0.9 * [1, 1.1], start, end);
 	sig = BufRd.ar(2, ~rr2, playhead);
-	// sig = LPF.ar(sig, 1500);
+	sig = LPF.ar(sig, Line.kr(20000, 500, 10));
 
 	sigIn = Mix.ar(sig);
 	sigIn = sigIn * (Amplitude.kr(sigIn) > 0.02);

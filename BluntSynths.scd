@@ -4,7 +4,7 @@ Document.current.createBackup;
 SynthDef(\boom, {
 	arg level = 1, gate = 1;
 	var sig, env;
-	sig = 0.7 * SinOsc.ar( XLine.kr([800, 900],[50,52], 0.02)
+	sig = 0.7 * SinOsc.ar( XLine.kr([800, 900],[50,52] * 1, 0.02)
 		* LFNoise1.kr(30).range(0.97, 1.03) );
 	sig = Splay.ar(sig);
 	env = Env.new([0,1,0.1,0],[0.01, 1, 2]);
@@ -75,7 +75,7 @@ SynthDef.new(\boc, {
 	sigR = Pan2.ar(sig[1], LFNoise1.ar(1.1).range(-0.8,0.8));
 	sig = sigL + sigR;
 	// sig = Decimator.ar(sig, 10000, 7);
-	// sig = sig + (sig.wrap * 0.05);
+	sig = sig + (sig.wrap * 0.05);
 	sig = sig * EnvGen.kr(Env.adsr(0.1,0,1,2.0), gate, doneAction: 2);
 	Out.ar(0, sig * level);
 }).add;
