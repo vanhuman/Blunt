@@ -9,6 +9,7 @@ SynthDef(\boom, {
 	sig = Splay.ar(sig);
 	env = Env.new([0,1,0.1,0],[0.01, 1, 2]);
 	// env = Env.asr(0.01, 1, 0.01);
+	sig = LPF.ar(sig, 50);
 	sig = sig * EnvGen.kr(env, gate, doneAction: 2);
 	Out.ar(0, sig * level);
 }).add;
@@ -24,7 +25,7 @@ SynthDef(\tshak, {
 	sig = BufRd.ar(2, ~sn, playhead, 1);
 	sig = NumChannels.ar(sig);
 	sig = sig * EnvGen.kr(Env.asr(0.01, 1, 0.01), gate, doneAction: 2);
-	Out.ar(2, sig * level);
+	Out.ar(0, sig * level);
 }).add;
 );
 

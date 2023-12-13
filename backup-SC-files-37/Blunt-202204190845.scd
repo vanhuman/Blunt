@@ -46,7 +46,7 @@ Ndef(\ruis).play(0).fadeTime_(1);
 
 (
 Ndef(\dark, {
-	var freq = 65.midicps * 0.5; // 65 63 62 60 58 56 55 53 51 48 50
+	var freq = 65.midicps * 0.5;
 	var sig, local, env, feedback = 0.95;
 	var cutoffVal = 20000, efxVal = 3, phaseMulVal = 1;
 
@@ -77,11 +77,11 @@ Ndef(\strings, {
 	var sig, env, playhead, start, end;
 	start = [0, 0.02] * 44100 ;
 	end = 5 * 44100 + start;
-	playhead = Phasor.ar(1, 0.25 * [1, 1.003], start, end);
+	playhead = Phasor.ar(1, 1 * [1, 1.003], start, end);
 	sig = BufRd.ar(2, ~str, playhead);
-	// sig = sig * (0.0 + SinOsc.kr(0.01));
+	// sig = sig * SinOsc.kr(0.1);
 	sig = RLPF.ar(sig, 1000);
-	sig * 0.1
+	sig * 0.4
 })
 )
 Ndef(\strings).release
@@ -96,7 +96,7 @@ Ndef(\lp1, {
 	// sig = PitchShift.ar(sig, 0.2, 0.5, 0.01, 0.01, 2);
 	// sig = sig * SinOsc.kr(20);
 	// sig = RLPF.ar(sig, 2000);
-	sig * 0.01
+	sig * 0.6
 })
 )
 Ndef(\lp1).release
@@ -109,7 +109,7 @@ Ndef(\lp2, {
 	playhead = Phasor.ar(1, 0.94*[1, 1.01], start, end);
 	sig = BufRd.ar(2, ~lp2, playhead);
 	// sig = sig * SinOsc.kr(0.1);
-	sig * 0.1
+	sig * 0.5
 })
 )
 Ndef(\lp2).release
@@ -133,10 +133,10 @@ Ndef(\lp3).release
 Ndef(\sample1, {
 	var sig, sigIn, env, playhead, start, end, local, feedVal = 0.5;
 	start = 23 + [0, 0.01] * 44100 ;
-	end = 3 * 44100 + start;
+	end = 1 * 44100 + start;
 	playhead = Phasor.ar(1, 0.9 * [1, 1.1], start, end);
 	sig = BufRd.ar(2, ~rr2, playhead);
-	// sig = LPF.ar(sig, Line.kr(20000, 500, 10));
+	sig = LPF.ar(sig, Line.kr(20000, 500, 10));
 
 	sigIn = Mix.ar(sig);
 	sigIn = sigIn * (Amplitude.kr(sigIn) > 0.02);
@@ -149,7 +149,7 @@ Ndef(\sample1, {
 	// sig = sig * SinOsc.kr(10);
 	// sig = Decimator.ar(sig, 10000, 7);
 	// sig = sig + (sig.wrap * 0.02);
-	sig * 0.3
+	sig * 0.8
 })
 )
 Ndef(\sample1).release
